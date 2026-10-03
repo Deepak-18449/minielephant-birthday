@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Little Surprise For You 💝</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<video class="background-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+<source src="assets/Bg_video.mp4" type="video/mp4">
+</video>
+<div class="video-overlay" aria-hidden="true"></div>
+<div class="page">
+<section class="card" id="app">
+<!-- Section 1: Welcome / start screen -->
+<div id="start">
+<div class="eyebrow">A tiny digital surprise</div>
+<h1 class="title">Someone made this just for you 💝</h1>
+<p class="sub">There are a few little surprises waiting inside. Tap the gift to begin.</p>
+<div class="gift" onclick="go('pin')"><div class="bow"></div><div class="lid"></div><div class="ribbonh"></div><div class="box"></div><div class="ribbonv"></div></div>
+<button onclick="go('pin')">Open the gift</button>
+</div>
+
+<!-- Section 2: PIN lock screen -->
+<div id="pin" class="hidden">
+<div class="eyebrow">Secret little lock</div><h1 class="title">Enter the PIN 🔐</h1>
+<p class="sub">Try the 4-digit code chosen for this surprise.</p>
+<div class="pin"><input maxlength="1" inputmode="numeric" id="p1"><input maxlength="1" inputmode="numeric" id="p2"><input maxlength="1" inputmode="numeric" id="p3"><input maxlength="1" inputmode="numeric" id="p4"></div>
+<div class="error" id="err"></div><button onclick="unlock()">Unlock</button><p class="small">Demo PIN: 0404 PIN Hint — The day you officially became everyone's problem 😭😂.</p>
+</div>
+
+<!-- Section 3: Welcome screen after unlock -->
+<div id="welcome" class="hidden">
+<div class="eyebrow">Unlocked ✨</div><h1 class="title">Welcome to your surprise</h1>
+<p class="sub">A few memories, a tiny game, and a letter are waiting for you.</p>
+<button onclick="go('memories')">Continue</button>
+</div>
+
+<!-- Section 4: Photo memories gallery -->
+<div id="memories" class="hidden memories-page">
+<div class="memories-header">
+  <h1 class="title memory-title">Little moments</h1>
+  <div class="camera-badge" aria-label="Camera">📷</div>
+</div>
+<div class="memories">
+<div class="memory is-current"><img class="photo" src="assets/IMG_1.jpg.jpeg" alt="Memory photo 1"><p>One of those moments worth keeping ✨</p></div>
+<div class="memory"><img class="photo" src="assets/IMG_2.jpg.jpeg" alt="Memory photo 2"><p>A memory that still makes you smile 💅</p></div>
+<div class="memory"><img class="photo" src="assets/IMG_3.jpg.jpeg" alt="Memory photo 3"><p>Then, now, and everything between 🥰</p></div>
+<div class="memory"><img class="photo" src="assets/IMG_4.jpg.jpeg" alt="Memory photo 4"><p>More memories to add here 👩‍👧‍👧</p></div>
+</div>
+<div class="gallery-controls" aria-label="Photo navigation">
+  <button type="button" onclick="changePhoto(-1)" aria-label="Previous photo">&larr;</button>
+  <span id="photoCount" aria-live="polite">1 / 4</span>
+  <button type="button" onclick="changePhoto(1)" aria-label="Next photo">&rarr;</button>
+</div>
+<button class="next-btn" onclick="go('game')">Next surprise</button>
+</div>
+
+<!-- Section 5: Box guessing game -->
+<div id="game" class="hidden">
+<div class="eyebrow">A playful moment</div><h1 class="title">Pick the lucky one 🎁</h1>
+<p class="sub">Choose one box. There is a tiny surprise behind it.</p>
+<div class="choice"><button onclick="choose(1)">🎁 Box 1</button><button onclick="choose(2)">🎁 Box 2</button><button onclick="choose(3)">🎁 Box 3</button><button onclick="choose(4)">🎁 Box 4</button></div>
+<p id="gameMsg" class="sub"></p><button id="gameNext" class="hidden" onclick="go('letter')">Read the letter</button>
+</div>
+
+<!-- Section 6: Handwritten letter + song -->
+<div id="letter" class="hidden letter-page">
+<div class="eyebrow">A handwritten note</div><h1 class="title">For you 💌</h1>
+<div class="letter"><div class="typing" id="typing"></div></div>
+<div class="music"><span>🎵 Your song</span><button class="secondary" onclick="toggleMusic()" id="musicBtn">Play song</button></div>
+<div class="letter-actions">
+  <div class="shape-divider" aria-hidden="true"></div>
+  <button onclick="go('cake')">Next</button>
+</div>
+<div class="song-credit">Song made by Deepak Aswani with the help of AI</div>
+<audio id="song" preload="auto" loop><source src="assets/song.mpeg" type="audio/mpeg"></audio>
+</div>
+
+<!-- Section 7: Birthday cake / wish section -->
+<div id="cake" class="hidden">
+<div class="eyebrow">One more sweet surprise 🎂</div><h1 class="title">Make a wish</h1>
+<p class="sub">Close your eyes, make a wish, then blow out the candle.</p>
+<div class="cake-scene" id="cakeScene">
+<div class="candle"><div class="flame" id="flame">🔥</div></div>
+<div class="cake-top"></div><div class="cake-body"></div><div class="icing-drip"></div>
+</div>
+<div class="cake-actions"><button id="wishButton" onclick="makeWish()">Make a wish</button><button id="cutButton" class="secondary hidden" onclick="cutCake()">Cut the cake</button></div>
+<p id="cakeMsg" class="sub"></p>
+</div>
+
+<!-- Section 8: Birthday wish page -->
+<div id="birthday" class="hidden">
+<div class="eyebrow">A birthday wish just for you 🎉</div><h1 class="title">Happy Birthday, <span id="birthdayName"></span>!</h1>
+<p class="sub">May your day be filled with love, laughter, and beautiful new memories.</p>
+<div class="birthday-cake">🎂</div>
+<button onclick="go('message')">Send a thank-you message</button>
+</div>
+
+<!-- Section 9: WhatsApp thank-you message -->
+<div id="message" class="hidden">
+<div class="eyebrow">A little message 💌</div><h1 class="title">Say thank you</h1>
+<p class="sub">Write a message and send it directly on WhatsApp.</p>
+<textarea id="thankYouMessage" class="message-box" placeholder="Write your thank-you message here..."></textarea>
+<button onclick="sendWhatsApp()">Send on WhatsApp</button>
+<p id="messageError" class="error"></p>
+<button class="secondary" onclick="location.reload()">Replay</button>
+</div>
+</section>
+</div>
+<!-- Full-size image modal for gallery clicks -->
+<div id="imageModal" class="image-modal hidden" aria-modal="true" role="dialog" aria-label="Full size image view">
+  <button type="button" class="image-close" aria-label="Close image">×</button>
+  <img id="modalImage" src="" alt="Full size memory photo">
+</div>
+<script src="script.js"></script>
+</body></html>
